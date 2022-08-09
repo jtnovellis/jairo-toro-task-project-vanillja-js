@@ -1,4 +1,4 @@
-let tasks = [];
+const tasks = [];
 const inputTask = document.querySelector('.input-task');
 const addButton = document.querySelector('.add-button');
 const form = document.querySelector('#form');
@@ -9,7 +9,7 @@ addButton.addEventListener('click', event => {
     handleSubmit(inputTask.value);
     inputTask.value = ''
     renderTask();
-  }
+  };
 });
 
 function handleSubmit(value) {
@@ -25,14 +25,17 @@ function renderTask() {
   const html = tasks.map(task => {
     return `
     <div class="each-task">
-      <input type="checkbox" name="checkbox" id="${task.id}">
+      <div class="in-check">
+        <input type="checkbox" name="checkbox" id="${task.id}">
+        <label for="${task.id}" class="check"></label>
+      </div> 
       <div class="task">${task.title}</div>
-    </div>
+    </div><hr>
     `;
   });
   const allTasks = document.querySelector('.all-tasks');
   allTasks.innerHTML = html.join('');
-
+  
   const checkbox = document.querySelectorAll('input[name=checkbox]');
   checkbox.forEach(check => {
     check.addEventListener('change', event => {
@@ -43,11 +46,13 @@ function renderTask() {
         check.classList.add('is-completed');
       } else {
         handleCheckTask(check.id, proof);
-        check.classList.remove('is-completed');
+        check.classList.remove('is-completed');        
       };
     });
   });
 };
+
+  
 
 function handleCheckTask(id, event) {
   tasks.forEach(task => {
@@ -55,7 +60,7 @@ function handleCheckTask(id, event) {
       task.completed = true;
     } else if (task.id === id && event === false) {
       task.completed = false;
-    }
+    };
   });
 };
 
